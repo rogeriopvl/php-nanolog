@@ -1,0 +1,16 @@
+{
+    "name": "nanolog/nanolog",
+    "description": "A simple and lightweight logging solution for PHP >= 5.3",
+    "require-dev": {
+        "phpunit/phpunit": "3.7.10"
+    },
+    "authors": [
+        {
+            "name": "rogeriopvl",
+            "email": "rogeriopvl@gmail.com"
+        }
+    ],
+    "require": {
+
+    }
+}
