@@ -96,38 +96,84 @@ class Nanolog
         return self::$_instances[$name];
     }
 
+    /**
+     * Writes a log message of a given level
+     *
+     * @param String $message
+     * @param int $level the level of the message
+     * @return boolean true on success, false otherwise
+     */
     public function log($message, $level)
     {
-        $linePrefix = date('Y-m-d H:i:s').' ';
+        // ignore levels bellow the set default
+        if ((int)$level > $this->_level) {
+            return true;
+        }
+        $linePrefix = $this->_generateLinePrefix((int)$level);
         $message = $linePrefix.$message."\n";
-        // we cant throw here an exception if its not able to write
-        // because its not practical to use try-catch everytime we log
-        fwrite($this->_handle, $message);
+        if (fwrite($this->_handle, $message) === false) {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * Writes a critical level message into the log
+     *
+     * @param String $message
+     */
     public function critical($message)
     {
-        $this->log('CRITICAL '.$message, self::CRITICAL);
+        $this->log($message, self::CRITICAL);
     }
 
+    /**
+     * Writes an error level message into the log
+     *
+     * @param String $message
+     */
     public function error($message)
     {
-        $this->log('ERROR '.$message, self::ERROR);
+        $this->log($message, self::ERROR);
     }
 
+    /**
+     * Writes a warning level message into the log
+     *
+     * @param String $message
+     */
     public function warning($message)
     {
-        $this->log('WARNING '.$message, self::WARNING);
+        $this->log($message, self::WARNING);
     }
 
+    /**
+     * Writes an info level message into the log
+     *
+     * @param String $message
+     */
     public function info($message)
     {
-        $this->log('INFO '.$message, self::INFO);
+        $this->log($message, self::INFO);
     }
 
+    /**
+     * Writes a debug level message into the log
+     *
+     * @param String $message
+     */
     public function debug($message)
     {
-        $this->log('DEBUG '.$message, self::DEBUG);
+        $this->log($message, self::DEBUG);
+    }
+
+    /**
+     * Sets the level of the log instance
+     *
+     * @param int $level the new level to set
+     */
+    public function setLevel($level) {
+        $this->_level = (int)$level;
     }
 
     /**
@@ -137,5 +183,36 @@ class Nanolog
      */
     public function getName() {
         return $this->_name;
+    }
+
+    /**
+     * Generates the line prefix with date and log level
+     *
+     * @param int $level
+     */
+    private function _generateLinePrefix($level)
+    {
+        $linePrefix = date('Y-m-d H:i:s');
+
+        switch($level) {
+            case self::CRITICAL:
+                $linePrefix .= ' CRITICAL ';
+                break;
+            case self::ERROR:
+                $linePrefix .= ' ERROR ';
+                break;
+            case self::WARNING:
+                $linePrefix .= ' WARNING ';
+                break;
+            case self::INFO:
+                $linePrefix .= ' INFO ';
+                break;
+            case self::DEBUG:
+                $linePrefix .= ' DEBUG ';
+                break;
+            default:
+                break;
+        }
+        return $linePrefix;
     }
 }
