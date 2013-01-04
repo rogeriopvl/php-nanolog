@@ -139,7 +139,7 @@ class Nanolog
                 return false;
             }
         }
-        self::$_instances[$name] = new Nanolog($level, $folder, $name, $fileName);
+        self::$_instances[$name] = new Nanolog($folder, $level, $name, $fileName);
 
         return self::$_instances[$name];
     }
