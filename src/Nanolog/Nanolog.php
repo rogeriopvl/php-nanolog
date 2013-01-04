@@ -54,12 +54,14 @@ class Nanolog
     /**
      * Constructor method
      *
-     * @param integer $level
-     * @param string $folder
-     * @param string $fileName;
-     * @param string $name
+     * @param string $folder the folder where logs are created
+     * @param integer $level the level to start writing to log, default is DEBUG
+     *                       (all messages bellow this level will be ignored)
+     * @param string $name (optional) the name of the log instance (if you
+     *                     need multiple instances you have to set this param)
+     * @param string $fileName (optional) the name of the log file
      */
-    private function __construct($level, $folder, $name = null, $fileName = null)
+    private function __construct($folder, $level = self::DEBUG, $name = null, $fileName = null)
     {
         if (!is_dir($folder) || !is_writable($folder)) {
             throw new \Exception('Folder does not exist, or is not writable');
@@ -91,7 +93,7 @@ class Nanolog
     /**
      * Returns a log instance
      *
-     * @param string $name, the name of the logger
+     * @param string $name, the name of the log instance
      * @return mixed Nanolog instance or false if no instance matches the name
      */
     public static function getInstance($name = null)
@@ -106,7 +108,7 @@ class Nanolog
     /**
      * Creates a new Nanolog instance
      */
-    public static function create($level, $folder, $name = null, $fileName = null)
+    public static function create($folder, $level = self::DEBUG, $name = null, $fileName = null)
     {
         if ($name !== null) {
             if (isset(self::$_instances[$name])) {
