@@ -1,16 +1,26 @@
 {
     "name": "nanolog/nanolog",
     "description": "A simple and lightweight logging solution for PHP >= 5.3",
-    "require-dev": {
-        "phpunit/phpunit": "3.7.10"
-    },
+    "keywords": ["log", "logging", "nanolog"],
+    "homepage": "https://github.com/rogeriopvl/php-nanolog",
+    "license": "MIT",
     "authors": [
         {
-            "name": "rogeriopvl",
-            "email": "rogeriopvl@gmail.com"
+            "name": "Rogério Vicente",
+            "email": "rogeriopvl@gmail.com",
+            "homepage": "http://rogeriopvl.com",
+            "role": "Developer"
         }
     ],
     "require": {
-
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.10"
+    },
+    "autoload": {
+        "psr-0": {
+            "Nanolog": "src"
+        }
     }
 }
