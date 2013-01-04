@@ -2,6 +2,8 @@
 
 /**
  * Nanolog - a simple and lightweight logging solution for PHP
+ *
+ * PHP version 5.3
  * 
  * Usage:
  * $log = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp');
@@ -9,7 +11,11 @@
  *
  * For more documentation read the README.md file, or the source :P
  *
- * @author Rogério Vicente <http://rogeriopvl.com>
+ * @category Logging
+ * @package  Nanolog
+ * @author   Rogério Vicente <http://rogeriopvl.com>
+ * @license  MIT https://github.com/rogeriopvl/nanolog/LICENSE
+ * @link     https://github.com/rogeriopvl/nanolog
  */
 
 namespace Nanolog;
@@ -54,12 +60,14 @@ class Nanolog
     /**
      * Constructor method
      *
-     * @param string $folder the folder where logs are created
-     * @param integer $level the level to start writing to log, default is DEBUG
-     *                       (all messages bellow this level will be ignored)
-     * @param string $name (optional) the name of the log instance (if you
-     *                     need multiple instances you have to set this param)
-     * @param string $fileName (optional) the name of the log file
+     * @param string  $folder   the folder where logs are created
+     * @param integer $level    the level to start writing to log, default is DEBUG
+     *                          (all messages bellow this level will be ignored)
+     * @param string  $name     (optional) the name of the log instance (if you
+     *                          need multiple instances you have to set this param)
+     * @param string  $fileName (optional) the name of the log file
+     *
+     * @return void
      */
     private function __construct($folder, $level = self::DEBUG, $name = null, $fileName = null)
     {
@@ -93,7 +101,8 @@ class Nanolog
     /**
      * Returns a log instance
      *
-     * @param string $name, the name of the log instance
+     * @param string $name the name of the log instance
+     *
      * @return mixed Nanolog instance or false if no instance matches the name
      */
     public static function getInstance($name = null)
@@ -107,6 +116,15 @@ class Nanolog
 
     /**
      * Creates a new Nanolog instance
+     *
+     * @param string  $folder   the folder where logs are created
+     * @param integer $level    the level to start writing to log, default is DEBUG
+     *                          (all messages bellow this level will be ignored)
+     * @param string  $name     (optional) the name of the log instance (if you
+     *                          need multiple instances you have to set this param)
+     * @param string  $fileName (optional) the name of the log file
+     *
+     * @return \Nanolog\Nanolog
      */
     public static function create($folder, $level = self::DEBUG, $name = null, $fileName = null)
     {
@@ -128,8 +146,9 @@ class Nanolog
     /**
      * Writes a log message of a given level
      *
-     * @param string $message
-     * @param integer $level the level of the message
+     * @param string  $message the log message
+     * @param integer $level   the level of the message
+     *
      * @return boolean true on success, false otherwise
      */
     public function log($message, $level)
@@ -149,59 +168,72 @@ class Nanolog
     /**
      * Writes a critical level message into the log
      *
-     * @param string $message
+     * @param string $message the log message
+     *
+     * @return boolean the log message
      */
     public function critical($message)
     {
-        $this->log($message, self::CRITICAL);
+        return $this->log($message, self::CRITICAL);
     }
 
     /**
      * Writes an error level message into the log
      *
-     * @param string $message
+     * @param string $message the log message
+     *
+     * @return boolean
      */
     public function error($message)
     {
-        $this->log($message, self::ERROR);
+        return $this->log($message, self::ERROR);
     }
 
     /**
      * Writes a warning level message into the log
      *
-     * @param string $message
+     * @param string $message the log message
+     *
+     * @return boolean
      */
     public function warning($message)
     {
-        $this->log($message, self::WARNING);
+        return $this->log($message, self::WARNING);
     }
 
     /**
      * Writes an info level message into the log
      *
-     * @param string $message
+     * @param string $message the log message
+     *
+     * @return boolean
      */
     public function info($message)
     {
-        $this->log($message, self::INFO);
+        return $this->log($message, self::INFO);
     }
 
     /**
      * Writes a debug level message into the log
      *
-     * @param string $message
+     * @param string $message the log message
+     *
+     * @return boolean
      */
     public function debug($message)
     {
-        $this->log($message, self::DEBUG);
+        return $this->log($message, self::DEBUG);
     }
 
     /**
      * Sets the level of the log instance
      *
      * @param integer $level the new level to set
+     *
+     * @return void
      */
-    public function setLevel($level) {
+    public function setLevel($level)
+    {
         $this->_level = (int)$level;
     }
 
@@ -210,37 +242,40 @@ class Nanolog
      *
      * @return string the name of the instance
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->_name;
     }
 
     /**
      * Generates the line prefix with date and log level
      *
-     * @param integer $level
+     * @param integer $level the log level
+     *
+     * @return string the line prefix with date and level
      */
     private function _generateLinePrefix($level)
     {
         $linePrefix = date('Y-m-d H:i:s');
 
         switch($level) {
-            case self::CRITICAL:
-                $linePrefix .= ' CRITICAL ';
-                break;
-            case self::ERROR:
-                $linePrefix .= ' ERROR ';
-                break;
-            case self::WARNING:
-                $linePrefix .= ' WARNING ';
-                break;
-            case self::INFO:
-                $linePrefix .= ' INFO ';
-                break;
-            case self::DEBUG:
-                $linePrefix .= ' DEBUG ';
-                break;
-            default:
-                break;
+        case self::CRITICAL:
+            $linePrefix .= ' CRITICAL ';
+            break;
+        case self::ERROR:
+            $linePrefix .= ' ERROR ';
+            break;
+        case self::WARNING:
+            $linePrefix .= ' WARNING ';
+            break;
+        case self::INFO:
+            $linePrefix .= ' INFO ';
+            break;
+        case self::DEBUG:
+            $linePrefix .= ' DEBUG ';
+            break;
+        default:
+            break;
         }
         return $linePrefix;
     }
