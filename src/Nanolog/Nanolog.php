@@ -14,8 +14,8 @@
  * @category Logging
  * @package  Nanolog
  * @author   Rogério Vicente <http://rogeriopvl.com>
- * @license  MIT https://github.com/rogeriopvl/nanolog/LICENSE
- * @link     https://github.com/rogeriopvl/nanolog
+ * @license  MIT https://github.com/rogeriopvl/php-nanolog/LICENSE
+ * @link     https://github.com/rogeriopvl/php-nanolog
  */
 
 namespace Nanolog;
