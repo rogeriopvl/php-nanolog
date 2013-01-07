@@ -13,7 +13,7 @@ class NanologTest extends PHPUnit_Framework_TestCase
      */
     public function testThrowsExceptionWhenFolderDoesNotExist()
     {
-        \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/xpto/foo');
+        \Nanolog\Nanolog::create('/xpto/foo', \Nanolog\Nanolog::DEBUG);
     }
 
     /**
@@ -21,12 +21,12 @@ class NanologTest extends PHPUnit_Framework_TestCase
      */
     public function testThrowsExceptionWhenFolderDoesHaveWritePermissions()
     {
-        \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/var');
+        \Nanolog\Nanolog::create('/var', \Nanolog\Nanolog::DEBUG);
     }
 
     public function testCreateAddsAnInstance()
     {
-        $log = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp');
+        $log = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG);
         $this->assertInstanceOf('\Nanolog\Nanolog', $log);
     }
 
@@ -35,8 +35,8 @@ class NanologTest extends PHPUnit_Framework_TestCase
      */
     public function testCantCreateMoreThanOneAnonymousInstance()
     {
-        $log = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp');
-        $log2 = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp');
+        $log = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG);
+        $log2 = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG);
 
         $this->assertEquals(false, $log2);
     }
@@ -46,7 +46,7 @@ class NanologTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateNamedInstance()
     {
-        $log = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp', 'log1');
+        $log = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG, 'log1');
 
         $this->assertInstanceOf('\Nanolog\Nanolog', $log);
         $this->assertEquals('log1', $log->getName());
@@ -58,8 +58,8 @@ class NanologTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateMultipleNamedInstances()
     {
-        $log1 = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp', 'log_1');
-        $log2 = \Nanolog\Nanolog::create(\Nanolog\Nanolog::INFO, '/tmp', 'log_2');
+        $log1 = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG, 'log_1');
+        $log2 = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG, 'log_2');
 
         $this->assertEquals('log_1', $log1->getName());
         $this->assertEquals('log_2', $log2->getName());
@@ -71,7 +71,7 @@ class NanologTest extends PHPUnit_Framework_TestCase
      */
     public function testGetAnonymousInstance()
     {
-        $log = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp');
+        $log = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG);
         $logInstance = \Nanolog\Nanolog::getInstance();
 
         $this->assertInstanceOf('\Nanolog\Nanolog', $logInstance);
@@ -84,7 +84,7 @@ class NanologTest extends PHPUnit_Framework_TestCase
      */
     public function testGetNamedInstance()
     {
-        $log = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp', 'test1');
+        $log = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG, 'test1');
         $logInstance = \Nanolog\Nanolog::getInstance('test1');
 
         $this->assertInstanceOf('\Nanolog\Nanolog', $logInstance);
@@ -94,7 +94,7 @@ class NanologTest extends PHPUnit_Framework_TestCase
 
     public function testLogCritical()
     {
-        $log = \Nanolog\Nanolog::create(\Nanolog\Nanolog::DEBUG, '/tmp', 'test2');
+        $log = \Nanolog\Nanolog::create('/tmp', \Nanolog\Nanolog::DEBUG, 'test2');
         $log->critical('Disk is full');
     }
 

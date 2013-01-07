@@ -14,8 +14,8 @@
  * @category Logging
  * @package  Nanolog
  * @author   Rogério Vicente <http://rogeriopvl.com>
- * @license  MIT https://github.com/rogeriopvl/php-nanolog/LICENSE
- * @version  GIT: v0.0.2
+ * @license  MIT https://github.com/rogeriopvl/php-nanolog/blob/master/LICENSE
+ * @version  GIT: v0.0.3
  * @link     https://github.com/rogeriopvl/php-nanolog
  */
 
@@ -54,6 +54,12 @@ class Nanolog
     private $_level;
 
     /**
+     * Date string format compatible with date()' php function
+     * @var string
+     */
+    private $_dateFormat;
+
+    /**
      * @var array
      */
     private static $_instances;
@@ -67,10 +73,11 @@ class Nanolog
      * @param string  $name     (optional) the name of the log instance (if you
      *                          need multiple instances you have to set this param)
      * @param string  $fileName (optional) the name of the log file
+     * @param string  $dateFormat (optional) the format of the date string
      *
      * @return void
      */
-    private function __construct($folder, $level = self::DEBUG, $name = null, $fileName = null)
+    private function __construct($folder, $level = self::DEBUG, $name = null, $fileName = null, $dateFormat = null)
     {
         if (!is_dir($folder) || !is_writable($folder)) {
             throw new \Exception('Folder does not exist, or is not writable');
@@ -80,8 +87,9 @@ class Nanolog
         $this->_name = $name;
         $this->_level = (int)$level;
         $this->_filePath = $folder . DIRECTORY_SEPARATOR;
+        $this->_dateFormat = $dateFormat === null ? 'Y-m-d H:i:s' : $dateFormat;
 
-        $this->_filePath .= $fileName === null ? date('Y-m-d').'.log' : $fileName;
+        $this->_filePath .= $fileName === null ? $this->_name.'_'.date('Y-m-d').'.log' : $fileName;
         $this->_handle = fopen($this->_filePath, 'a');
 
         if (!$this->_handle) {
@@ -124,10 +132,11 @@ class Nanolog
      * @param string  $name     (optional) the name of the log instance (if you
      *                          need multiple instances you have to set this param)
      * @param string  $fileName (optional) the name of the log file
+     * @param string  $dateFormat (optional) the date format string
      *
      * @return \Nanolog\Nanolog
      */
-    public static function create($folder, $level = self::DEBUG, $name = null, $fileName = null)
+    public static function create($folder, $level = self::DEBUG, $name = null, $fileName = null, $dateFormat = null)
     {
         if ($name !== null) {
             if (isset(self::$_instances[$name])) {
@@ -227,6 +236,18 @@ class Nanolog
     }
 
     /**
+     * Sets the date format
+     *
+     * @param string $format the new date format (date() compatible)
+     *
+     * @return void
+     */
+    public function setDateFormat($format)
+    {
+        $this->_dateFormat = $format;
+    }
+
+    /**
      * Sets the level of the log instance
      *
      * @param integer $level the new level to set
@@ -257,7 +278,7 @@ class Nanolog
      */
     private function _generateLinePrefix($level)
     {
-        $linePrefix = date('Y-m-d H:i:s');
+        $linePrefix = date($this->_dateFormat);
 
         switch($level) {
         case self::CRITICAL:
