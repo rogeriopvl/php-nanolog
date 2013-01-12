@@ -140,7 +140,7 @@ class Nanolog
     {
         if ($name !== null) {
             if (isset(self::$_instances[$name])) {
-                return false; // should we return the instance instead?
+                return $_instance[$name];
             }
         } else {
             // sorry you can't have more than one unamed instance :P
