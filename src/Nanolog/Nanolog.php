@@ -15,7 +15,7 @@
  * @package  Nanolog
  * @author   Rogério Vicente <http://rogeriopvl.com>
  * @license  MIT https://github.com/rogeriopvl/php-nanolog/blob/master/LICENSE
- * @version  GIT: v0.0.3
+ * @version  GIT: v0.0.4
  * @link     https://github.com/rogeriopvl/php-nanolog
  */
 
