@@ -15,7 +15,7 @@
  * @package  Nanolog
  * @author   Rogério Vicente <http://rogeriopvl.com>
  * @license  MIT https://github.com/rogeriopvl/php-nanolog/blob/master/LICENSE
- * @version  GIT: v0.0.3
+ * @version  GIT: v0.0.4
  * @link     https://github.com/rogeriopvl/php-nanolog
  */
 
@@ -140,7 +140,7 @@ class Nanolog
     {
         if ($name !== null) {
             if (isset(self::$_instances[$name])) {
-                return false; // should we return the instance instead?
+                return $_instance[$name];
             }
         } else {
             // sorry you can't have more than one unamed instance :P
