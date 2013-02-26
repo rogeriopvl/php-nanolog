@@ -31,6 +31,18 @@ class Nanolog
     const DEBUG = 4;
 
     /**
+     * Levels description
+     * @var array
+     */
+    private static $levels = array(
+        self::CRITICAL => 'CRITICAL',
+        self::ERROR => 'ERROR',
+        self::WARNING => 'WARNING',
+        self::INFO => 'INFO',
+        self::DEBUG => 'DEBUG'
+    );
+
+    /**
      * The path to the log file
      * @var string
      */
@@ -278,27 +290,6 @@ class Nanolog
      */
     private function _generateLinePrefix($level)
     {
-        $linePrefix = date($this->_dateFormat);
-
-        switch($level) {
-        case self::CRITICAL:
-            $linePrefix .= ' CRITICAL ';
-            break;
-        case self::ERROR:
-            $linePrefix .= ' ERROR ';
-            break;
-        case self::WARNING:
-            $linePrefix .= ' WARNING ';
-            break;
-        case self::INFO:
-            $linePrefix .= ' INFO ';
-            break;
-        case self::DEBUG:
-            $linePrefix .= ' DEBUG ';
-            break;
-        default:
-            break;
-        }
-        return $linePrefix;
+        return date($this->_dateFormat) . ' ' . self::$levels[$level]. ' ';
     }
 }
