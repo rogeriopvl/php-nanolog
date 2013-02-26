@@ -160,7 +160,7 @@ class Nanolog
                 return false;
             }
         }
-        self::$_instances[$name] = new Nanolog($folder, $level, $name, $fileName);
+        self::$_instances[$name] = new Nanolog($folder, $level, $name, $fileName, $dateFormat);
 
         return self::$_instances[$name];
     }
